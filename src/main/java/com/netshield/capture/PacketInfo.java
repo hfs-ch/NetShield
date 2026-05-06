@@ -1,43 +1,41 @@
 package com.netshield.capture;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class PacketInfo {
 
-    private String sourceIP;
-    private String destinationIP;
-    private int sourcePort;
-    private int destinationPort;
-    private String protocol;   
-    private int size;          
-    private LocalDateTime timestamp;
+    private final String  srcIP, dstIP, protocol;
+    private final int     srcPort, dstPort, size;
+    private final boolean synFlag, ackFlag;
+    private final Instant timestamp;
 
-    public PacketInfo(String sourceIP, String destinationIP,
-                      int sourcePort, int destinationPort,
-                      String protocol, int size) {
-        this.sourceIP = sourceIP;
-        this.destinationIP = destinationIP;
-        this.sourcePort = sourcePort;
-        this.destinationPort = destinationPort;
-        this.protocol = protocol;
-        this.size = size;
-        this.timestamp = LocalDateTime.now();
+    public PacketInfo(String srcIP, String dstIP, int srcPort, int dstPort,
+                      String protocol, int size, boolean synFlag, boolean ackFlag) {
+        this.srcIP     = srcIP;
+        this.dstIP     = dstIP;
+        this.srcPort   = srcPort;
+        this.dstPort   = dstPort;
+        this.protocol  = protocol;
+        this.size      = size;
+        this.synFlag   = synFlag;
+        this.ackFlag   = ackFlag;
+        this.timestamp = Instant.now();
     }
 
-    public String getSourceIP()       { return sourceIP; }
-    public String getDestinationIP()  { return destinationIP; }
-    public int getSourcePort()        { return sourcePort; }
-    public int getDestinationPort()   { return destinationPort; }
-    public String getProtocol()       { return protocol; }
-    public int getSize()              { return size; }
-    public LocalDateTime getTimestamp() { return timestamp; }
+    // ✅ Getters manquants
+    public String  getSrcIP()    { return srcIP;    }
+    public String  getDstIP()    { return dstIP;    }
+    public int     getSrcPort()  { return srcPort;  }
+    public int     getDstPort()  { return dstPort;  }
+    public String  getProtocol() { return protocol; }
+    public int     getSize()     { return size;     }
+
+    // ✅ SYN sans ACK = SYN Flood
+    public boolean isSynOnly()   { return synFlag && !ackFlag; }
 
     @Override
     public String toString() {
         return String.format("[%s] %s | %s:%d → %s:%d | %d bytes",
-                timestamp, protocol,
-                sourceIP, sourcePort,
-                destinationIP, destinationPort,
-                size);
+            timestamp, protocol, srcIP, srcPort, dstIP, dstPort, size);
     }
 }

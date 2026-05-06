@@ -8,7 +8,7 @@ public class Main {
         
         PacketSniffer.listInterfaces();
 
-        String myInterface = "wlan0";
+        String myInterface = "ens33";
 
         PacketSniffer sniffer = new PacketSniffer(myInterface);
 
@@ -16,7 +16,7 @@ public class Main {
         snifferThread.start();
 
         try {
-            Thread.sleep(30000);
+            Thread.sleep(120000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

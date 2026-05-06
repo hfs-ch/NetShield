@@ -1,4 +1,5 @@
 com/netshield/App.class
 com/netshield/Main.class
 com/netshield/capture/PacketInfo.class
+com/netshield/detection/ThreatDetector.class
 com/netshield/capture/PacketSniffer.class
